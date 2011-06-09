@@ -6,11 +6,11 @@ gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 gem "authlogic"
 gem 'rails3-generators'
 
-gem "bson_ext"
+#gem "bson_ext"
 gem "haml"
 gem "haml-rails"
 gem "jquery-rails"
-gem "rcov"
+#gem "rcov"
 
 gem "rake", "= 0.8.7"
 
