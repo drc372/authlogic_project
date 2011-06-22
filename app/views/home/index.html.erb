@@ -18,4 +18,19 @@ Welcome to the Login Script Bitches!
   <p> <%= "You are logged in as #{current_user.login}"%> </p>
   <p> <%= "You have logged in #{current_user.login_count} times "%> </p>
   <li><%= link_to "Would you like to logout?", logout_path %> </li>
+<% else %>
+  <h1>Log in</h1>
+  <%= form_for(:user_session, :url => "create" ) do |f| %>
+    <div class="field">
+      <%= f.label :login %><br />
+      <%= f.text_field :login %>
+    </div>
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Log in" %>
+    </div>
+  <% end %>
 <% end %>

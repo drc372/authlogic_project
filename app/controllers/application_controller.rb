@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :prepare_new_session
 
   helper_method :current_user_session, :current_user
 
   private
+
+    def prepare_new_session
+      @user_session = UserSession.new if current_user.blank?
+    end
+
     def current_user_session
       logger.debug "ApplicationController::current_user_session"
       return @current_user_session if defined?(@current_user_session)

@@ -6,8 +6,6 @@ AuthlogicProject::Application.routes.draw do
 
   match 'login' => "user_sessions#new",  :as => :login
   match 'logout' => "user_sessions#destroy", :as => :logout
-#  match 'logout' => "#destroy", :as => :logout
-
   match 'create' => "user_sessions#create",  :as => :login
 
   root :to => 'home#index'
