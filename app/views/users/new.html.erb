@@ -1,6 +1,18 @@
-<h1>Registration Form!</h1>
+<% if current_user %>
 
-<p>We know how everyone likes signing up for stuff! 
-<br>Have at it!
-<br>
-<%= render 'form' %>
+  <%= link_to "Go Home",  root_path %>
+
+<% else %>
+  <h1>Registration Form!</h1>
+
+  <p>We know how everyone likes signing up for stuff! 
+  <br>Have at it!
+  <br>
+
+  <%= link_to "Already registered?", root_path %>
+
+  <%= render 'form' %>
+<% end %>
+
+<%= debug(params) if Rails.env.development? %>
+

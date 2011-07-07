@@ -4,3 +4,4 @@
 <p> Shouldn't it be their unique page? like users/1 or something </p>
 <p><%= "#{current_user.login}" %> </p>
 <li><%= link_to "Would you like to logout?", logout_path %> </li>
+<%= debug(params) if Rails.env.development? %>

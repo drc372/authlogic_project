@@ -1,6 +1,6 @@
 <h1>Home</h1>
 
-Welcome to the Login Script Bitches!
+Welcome to MyBlogWall.comz!
 
 <div id="user_nav">
   <% if current_user %>
@@ -8,7 +8,6 @@ Welcome to the Login Script Bitches!
     <%= link_to "Logout", logout_path %>
   <% else %>
     <%=link_to "Register", new_user_path %>
-    <%=link_to "Login", login_path %>
   <% end %>
 </div>
 
@@ -16,11 +15,14 @@ Welcome to the Login Script Bitches!
   <h1>Home user see's when signed in</h1>
   <p> home/index.html.erb </p>
   <p> <%= "You are logged in as #{current_user.login}"%> </p>
-  <p> <%= "You have logged in #{current_user.login_count} times "%> </p>
-  <li><%= link_to "Would you like to logout?", logout_path %> </li>
+  <p> <%= "Your email is #{current_user.email}"%> </p>
+  <p> <%= "Your password is  #{current_user.password}"%> </p>
+  <p> <%= "You have logged in #{current_user.login_count} times"%> </p>
+
 <% else %>
   <h1>Log in</h1>
   <%= form_for(:user_session, :url => "create" ) do |f| %>
+    <%= f.error_messages %>
     <div class="field">
       <%= f.label :login %><br />
       <%= f.text_field :login %>
@@ -34,3 +36,4 @@ Welcome to the Login Script Bitches!
     </div>
   <% end %>
 <% end %>
+<%= debug(params) if Rails.env.development? %>
