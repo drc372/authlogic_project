@@ -1,6 +1,7 @@
 <% if current_user %>
 <div id= "user_nav">
-  <%= link_to "Homepage",  root_path %>
+  <%= link_to "Home",  root_path %>
+  <%= link_to "Logout", logout_path %>
 </div>
 <% else %>
   <h1>Registration Form!</h1>
