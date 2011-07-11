@@ -1,16 +1,13 @@
 <% if current_user %>
-
-  <%= link_to "Go Home",  root_path %>
-
+<div id= "user_nav">
+  <%= link_to "Homepage",  root_path %>
+</div>
 <% else %>
   <h1>Registration Form!</h1>
 
-  <p>We know how everyone likes signing up for stuff! 
-  <br>Have at it!
-  <br>
-
-  <%= link_to "Already registered?", root_path %>
-
+  <div id = "user_nav">
+  <%= link_to "Login", root_path %>
+  </div>
   <%= render 'form' %>
 <% end %>
 
