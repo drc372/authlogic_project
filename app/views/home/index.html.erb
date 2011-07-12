@@ -1,3 +1,7 @@
+<h1>Home</h1>
+
+Welcome to MyBlogWall.comz!
+
 <div id="user_nav">
   <h1>Home</h1>
   <% if current_user %>
@@ -19,11 +23,14 @@ that we want to display.
   <h2>Logged in user Specific Info</h2>
   <p> home/index.html.erb </p>
   <p> <%= "You are logged in as #{current_user.login}"%> </p>
-  <p> <%= "You have logged in #{current_user.login_count} times "%> </p>
-  <li><%= link_to "Would you like to logout?", logout_path %> </li>
+  <p> <%= "Your email is #{current_user.email}"%> </p>
+  <p> <%= "Your password is  #{current_user.password}"%> </p>
+  <p> <%= "You have logged in #{current_user.login_count} times"%> </p>
+
 <% else %>
   <h2>Log in</h2>
   <%= form_for(:user_session, :url => "create" ) do |f| %>
+    <%= f.error_messages %>
     <div class="field">
       <%= f.label :login %><br />
       <%= f.text_field :login %>
@@ -37,3 +44,4 @@ that we want to display.
     </div>
   <% end %>
 <% end %>
+<%= debug(params) if Rails.env.development? %>

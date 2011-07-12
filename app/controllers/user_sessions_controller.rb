@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
       flash[:notice] = "Login successful hey thats a good thing right?"
       redirect_back_or_default :root
     else
-      render :action => :new
+      redirect_back_or_default :root
     end
   end
 

@@ -1,6 +1,16 @@
-<h1>Registration Form!</h1>
+<% if current_user %>
+<div id= "user_nav">
+  <%= link_to "Home",  root_path %>
+  <%= link_to "Logout", logout_path %>
+</div>
+<% else %>
+  <h1>Registration Form!</h1>
 
-<p>We know how everyone likes signing up for stuff! 
-<br>Have at it!
-<br>
-<%= render 'form' %>
+  <div id = "user_nav">
+  <%= link_to "Login", root_path %>
+  </div>
+  <%= render 'form' %>
+<% end %>
+
+<%= debug(params) if Rails.env.development? %>
+
