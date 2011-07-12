@@ -1,25 +1,28 @@
-<h1>Home</h1>
-
-Welcome to the Login Script Bitches!
-
 <div id="user_nav">
+  <h1>Home</h1>
   <% if current_user %>
-    <%= link_to "Edit Profile", edit_user_path(:current) %>
+    <%#= link_to "Edit Profile", edit_user_path(:current) %>
+    <%= link_to "Profile", user_path(current_user.login) %>
     <%= link_to "Logout", logout_path %>
   <% else %>
     <%=link_to "Register", new_user_path %>
-    <%=link_to "Login", login_path %>
+    <%#=link_to "Login", login_path %>
   <% end %>
 </div>
 
+<p>Welcome to the Login Script Bitches!
+<p>This will be the home page.  This will tell site news or any info
+that we want to display.
+<br><br><br>
+
 <% if current_user %>
-  <h1>Home user see's when signed in</h1>
+  <h2>Logged in user Specific Info</h2>
   <p> home/index.html.erb </p>
   <p> <%= "You are logged in as #{current_user.login}"%> </p>
   <p> <%= "You have logged in #{current_user.login_count} times "%> </p>
   <li><%= link_to "Would you like to logout?", logout_path %> </li>
 <% else %>
-  <h1>Log in</h1>
+  <h2>Log in</h2>
   <%= form_for(:user_session, :url => "create" ) do |f| %>
     <div class="field">
       <%= f.label :login %><br />

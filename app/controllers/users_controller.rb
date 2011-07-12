@@ -32,7 +32,15 @@ class UsersController < ApplicationController
 
 
   def show
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    @user = User.find_by_login(params[:login])
+    @curcur = current_user.login
+    @loginvar = params[:login]
+
+    @test = false
+    if(@user == current_user) then
+      @test = true
+    end
   end
 
   def index
