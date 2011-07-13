@@ -32,14 +32,21 @@ class UsersController < ApplicationController
 
 
   def show
-    #@user = User.find(params[:id])
-    @user = User.find_by_login(params[:login])
-    @curcur = current_user.login
-    @loginvar = params[:login]
+    @curURL = request.request_uri
+    if(current_user) then
+      @curUser = current_user.login
+    else
+      @curUser = nil
+    end
+    @match = "/users/#{@curUser}"
 
-    @test = false
-    if(@user == current_user) then
-      @test = true
+    @userlevel = UserLevel::OUTSIDER 
+    if(@match.eql?(@curURL)) then
+      @userlevel = UserLevel::USER
+    elsif(@curUser != nil)
+      @userlevel = UserLevel::FRIEND
+    else
+      @userlevel = UserLevel::OUTSIDER
     end
   end
 

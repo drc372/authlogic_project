@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user_session, :current_user
 
+  class UserLevel
+    ADMIN = 1
+    USER = 2
+    FRIEND = 3
+    GUEST = 4
+    OUTSIDER = 5
+  end
+
   private
 
     def prepare_new_session

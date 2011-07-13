@@ -1,7 +1,21 @@
 <h1>users/index.html.erb</h1>
-<p> This is what the user see's at /users that seems wrong </p>
-<p> This is the page the user is directed to after login" </p>
-<p> Shouldn't it be their unique page? like users/1 or something </p>
-<p><%= "#{current_user.login} then #{@curcur} then #{@user} then #{@loginvar}" %> </p>
-<p><%= "What controller has as user ...#{@test}"%>
+
+<p><%= "#{@curUser} then #{@curURL} then #{@match}" %> </p>
+<p><%= "Match:#{@match}"%>
+<p><%= "URI  :#{@curURL}"%>
+<p><%= "What controller has as user ...#{@userlevel}"%>
+
+<p>
+<% if @userlevel == 1 %>
+    This is shown when the admin is logged in.  Don't know what to about this yet.
+<% elsif @userlevel == 2 %>
+    The user that owns this page is logged in.  They see and have access to everything.
+<% elsif @userlevel == 3 %>
+    A user that is friends with this user is logged in.  They can see the friend privacy level.
+<% elsif @userlevel == 4 %>
+   A signed in guest is looking at the page and they can see guest stuff.
+<% elsif @userlevel == 5 %>
+   Someone who is not logged in is looking at this page.
+<% end %>
+
 <li><%= link_to "Would you like to logout?", logout_path %> </li>
