@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     USER = 2
     FRIEND = 3
     GUEST = 4
-    OUTSIDER = 5
+    PUBLIC = 5
   end
 
   private

@@ -3,6 +3,7 @@ class UserSessionsController < ApplicationController
   before_filter :require_user, :only => :destroy
 
   def new
+   redirect_to root_url
   end
 
   def create
@@ -11,7 +12,7 @@ class UserSessionsController < ApplicationController
       flash[:notice] = "Login successful hey thats a good thing right?"
       redirect_back_or_default :root
     else
-      redirect_back_or_default :root
+      redirect_to root_url
     end
   end
 

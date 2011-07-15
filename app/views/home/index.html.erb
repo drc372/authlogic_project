@@ -5,7 +5,7 @@ Welcome to MyBlogWall.comz!
 <div id="user_nav">
   <h1>Home</h1>
   <% if current_user %>
-    <%#= link_to "Edit Profile", edit_user_path(:current) %>
+    <%= link_to "Edit Profile", edit_user_path(current_user.login) %>
     <%= link_to "Profile", user_path(current_user.login) %>
     <%= link_to "Logout", logout_path %>
   <% else %>

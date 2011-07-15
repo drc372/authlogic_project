@@ -1,32 +1,22 @@
+<p><%= "#{@curUser} then #{@curURL} then #{@match}" %> </p>
+<p><%= "Match:#{@match}"%>
+<p><%= "URI  :#{@curURL}"%>
+<p><%= "URI  :#{@trunkedURL}"%>
+<p><%= "What controller has as user ...#{@userlevel}"%>
+
+<% if @userlevel == 2 %>
 <h1>Edit your information </h1>
 <div id = "user_nav">
 <%= link_to "Home", root_path %>
 <%= link_to "Logout", logout_path %>
+
 </div>
 <br />
 <br />
-<%= form_for @user do |f| %>
-  <%= f.error_messages %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %><br />
-  </div>
-  <div class= "actions">
-    <%= f.submit "Change Email" %>
-  </div>
-<% end %>
+<%= render 'formForEditEmail' %>
+<%= render 'formForEditPassword' %>
 
-<%= form_for @user do |f| %>
-  <div class = "field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %><br />
-  </div>
-  <div class = "field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.text_field :password_confirmation %><br />
-  </div>
-  <div class = "actions">
-    <%= f.submit "Change password" %>
-  </div>
-<% end %>
 <%= debug(params) if Rails.env.development? %>
+<% else %>
+die
+<% end %>

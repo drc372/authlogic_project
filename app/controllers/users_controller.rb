@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :determineUserLevel
 
   def new
     @title = "Sign Up!"
@@ -32,25 +33,33 @@ class UsersController < ApplicationController
 
 
   def show
-    @curURL = request.request_uri
+
+  end
+
+  def index
+  end
+
+  def determineUserLevel
+    @curURL = request.fullpath
+
     if(current_user) then
       @curUser = current_user.login
     else
       @curUser = nil
     end
     @match = "/users/#{@curUser}"
+    @matchLength = @match.length
+    @trunkedURL = @curURL[0...@matchLength]
 
-    @userlevel = UserLevel::OUTSIDER 
-    if(@match.eql?(@curURL)) then
+    if (@curUser == nil)
+    @userlevel = UserLevel::PUBLIC 
+    elsif(@match.eql?(@trunkedURL)) then
       @userlevel = UserLevel::USER
-    elsif(@curUser != nil)
-      @userlevel = UserLevel::FRIEND
+      @user = current_user
     else
-      @userlevel = UserLevel::OUTSIDER
+      @userlevel = UserLevel::FRIEND
     end
-  end
 
-  def index
   end
 
 end

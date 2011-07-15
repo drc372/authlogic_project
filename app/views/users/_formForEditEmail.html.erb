@@ -1,0 +1,10 @@
+<%= form_for @user do |f| %>
+  <%= f.error_messages %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %><br />
+  </div>
+  <div class= "actions">
+    <%= f.submit "Change Email" %>
+  </div>
+<% end %>

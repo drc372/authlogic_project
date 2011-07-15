@@ -1,8 +1,9 @@
-<h1>users/index.html.erb</h1>
+<h1>users/show.html.erb</h1>
 
 <p><%= "#{@curUser} then #{@curURL} then #{@match}" %> </p>
 <p><%= "Match:#{@match}"%>
 <p><%= "URI  :#{@curURL}"%>
+<p><%= "URI  :#{@trunkedURL}"%>
 <p><%= "What controller has as user ...#{@userlevel}"%>
 
 <p>
@@ -10,6 +11,8 @@
     This is shown when the admin is logged in.  Don't know what to about this yet.
 <% elsif @userlevel == 2 %>
     The user that owns this page is logged in.  They see and have access to everything.
+   <%= render 'formForEditEmail' %>
+   <%= render 'formForEditPassword' %>
 <% elsif @userlevel == 3 %>
     A user that is friends with this user is logged in.  They can see the friend privacy level.
 <% elsif @userlevel == 4 %>
@@ -18,4 +21,6 @@
    Someone who is not logged in is looking at this page.
 <% end %>
 
-<li><%= link_to "Would you like to logout?", logout_path %> </li>
+<% if @userlevel > 5 %>
+   <li><%= link_to "Would you like to logout?", logout_path %> </li>
+<% end %>
