@@ -52,7 +52,7 @@ class UsersController < ApplicationController
     @trunkedURL = @curURL[0...@matchLength]
 
     if (@curUser == nil)
-    @userlevel = UserLevel::PUBLIC 
+      @userlevel = UserLevel::PUBLIC 
     elsif(@match.eql?(@trunkedURL)) then
       @userlevel = UserLevel::USER
       @user = current_user

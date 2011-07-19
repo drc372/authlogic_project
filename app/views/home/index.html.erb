@@ -1,9 +1,9 @@
 <h1>Home</h1>
 
 Welcome to MyBlogWall.comz!
+<p>
 
 <div id="user_nav">
-  <h1>Home</h1>
   <% if current_user %>
     <%= link_to "Edit Profile", edit_user_path(current_user.login) %>
     <%= link_to "Profile", user_path(current_user.login) %>
@@ -14,10 +14,9 @@ Welcome to MyBlogWall.comz!
   <% end %>
 </div>
 
-<p>Welcome to the Login Script Bitches!
 <p>This will be the home page.  This will tell site news or any info
 that we want to display.
-<br><br><br>
+<br><br>
 
 <% if current_user %>
   <h2>Logged in user Specific Info</h2>
@@ -29,7 +28,8 @@ that we want to display.
 
 <% else %>
   <h2>Log in</h2>
-  <%= form_for(:user_session, :url => "create" ) do |f| %>
+  <%= form_for(@user_session, :url => "create" ) do |f| %>
+    <%#= render "shared/error_messages", :target => @user_session %>
     <%= f.error_messages %>
     <div class="field">
       <%= f.label :login %><br />
@@ -44,4 +44,5 @@ that we want to display.
     </div>
   <% end %>
 <% end %>
+
 <%= debug(params) if Rails.env.development? %>

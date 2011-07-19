@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :prepare_new_session
-
   helper_method :current_user_session, :current_user
 
   class UserLevel

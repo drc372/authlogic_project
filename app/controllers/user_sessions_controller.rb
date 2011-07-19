@@ -1,10 +1,7 @@
 class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy
-
-  def new
-   redirect_to root_url
-  end
+  #generalize_credentials_error_messages true
 
   def create
     @user_session = UserSession.new(params[:user_session])
@@ -12,7 +9,7 @@ class UserSessionsController < ApplicationController
       flash[:notice] = "Login successful hey thats a good thing right?"
       redirect_back_or_default :root
     else
-      redirect_to root_url
+      render :action => "home/index"
     end
   end
 
