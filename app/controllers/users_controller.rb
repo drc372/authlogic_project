@@ -33,6 +33,7 @@ class UsersController < ApplicationController
 
 
   def show
+    # Look for a user with the vanity link
 
   end
 
@@ -48,12 +49,10 @@ class UsersController < ApplicationController
       @curUser = nil
     end
     @match = "/users/#{@curUser}"
-    @matchLength = @match.length
-    @trunkedURL = @curURL[0...@matchLength]
 
     if (@curUser == nil)
       @userlevel = UserLevel::PUBLIC 
-    elsif(@match.eql?(@trunkedURL)) then
+    elsif(@match.eql?(@curURL)) then
       @userlevel = UserLevel::USER
       @user = current_user
     else
