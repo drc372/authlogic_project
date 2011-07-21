@@ -49,10 +49,11 @@ class UsersController < ApplicationController
       @curUser = nil
     end
     @match = "/users/#{@curUser}"
+    @matchPath = @curURL[0...@match.length+1]
 
     if (@curUser == nil)
       @userlevel = UserLevel::PUBLIC 
-    elsif(@match.eql?(@curURL)) then
+    elsif(@match.eql?(@curURL) || @matchPath.eql?(@match+"/")) then
       @userlevel = UserLevel::USER
       @user = current_user
     else
