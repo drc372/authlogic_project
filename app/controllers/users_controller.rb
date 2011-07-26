@@ -35,6 +35,16 @@ class UsersController < ApplicationController
   def show
     # Look for a user with the vanity link
 
+    # First get the user path you are looking for
+    @userPage = request.fullpath.split("users/").split('/')[1][0]
+    
+    # This finds the user object and gets its name or returns nil
+    if(! @tempUser = User.try(:find_by_login,@userPage).try(:login))
+      #DanC Todo: Redirect this to 404 instead of this warning
+      @tempUser = "Error!!! Can't find user.  Should redirect to 404"
+    end
+
+
   end
 
   def index
@@ -43,7 +53,7 @@ class UsersController < ApplicationController
   def determineUserLevel
     @curURL = request.fullpath
 
-    if(current_user) then
+    if(current_user)
       @curUser = current_user.login
     else
       @curUser = nil
@@ -51,7 +61,7 @@ class UsersController < ApplicationController
     @match = "/users/#{@curUser}"
     @matchPath = @curURL[0...@match.length+1]
 
-    if (@curUser == nil)
+    if (@curUser == nil) then 
       @userlevel = UserLevel::PUBLIC 
     elsif(@match.eql?(@curURL) || @matchPath.eql?(@match+"/")) then
       @userlevel = UserLevel::USER

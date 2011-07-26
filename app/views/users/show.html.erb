@@ -5,6 +5,7 @@
 <p><%= "URI  :#{@curURL}"%>
 <p><%= "URI  :#{@trunkedURL}"%>
 <p><%= "What controller has as user ...#{@userlevel}"%>
+<p><%= "Viewing the page of" %> <big><big> <%= "#{@tempUser}" %> </big></big>
 
 <p>
 <% if @userlevel == 1 %>
@@ -24,3 +25,4 @@
 <% if @userlevel > 5 %>
    <li><%= link_to "Would you like to logout?", logout_path %> </li>
 <% end %>
+
