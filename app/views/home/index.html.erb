@@ -29,7 +29,7 @@ that we want to display.
 <% else %>
   <h2>Log in</h2>
   <%= form_for(@user_session, :url => "create" ) do |f| %>
-    <%#= render "shared/error_messages", :target => @user_session %>
+    <%#= render "shared/error_messages", :target => @user %>
     <%= f.error_messages %>
     <div class="field">
       <%= f.label :login %><br />
@@ -41,6 +41,9 @@ that we want to display.
     </div>
     <div class="actions">
       <%= f.submit "Log in" %>
+    </div>
+    <div>
+      <%=link_to "Forget your password?", forgot_path %>
     </div>
   <% end %>
 <% end %>

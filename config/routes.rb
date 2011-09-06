@@ -5,7 +5,11 @@ AuthlogicProject::Application.routes.draw do
 
   match 'login' => "user_sessions#new",  :as => :login
   match 'logout' => "user_sessions#destroy", :as => :logout
-  match 'create' => "user_sessions#create",  :as => :login
+  match 'create' => "user_sessions#create"
+
+  match 'forgot' => "users#forgot", :as => :forgot
+  match 'resetbyemail' => "users#resetbyemail"
+  match 'resetbylogin' => "users#resertbylogin"
 
   root :to => 'home#index'
 

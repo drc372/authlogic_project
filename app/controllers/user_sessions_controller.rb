@@ -15,7 +15,7 @@ class UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = "Logout successful if you come back you get more virgins than a dead muslim"
+    flash[:notice] = "Logout successful, come back and you get more virgins than a dead muslim"
     redirect_back_or_default :root
   end
 
