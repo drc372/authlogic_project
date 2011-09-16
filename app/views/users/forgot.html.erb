@@ -1,27 +1,31 @@
-Enter email
-<br><br>
-----or----
-<br><br>
-Enter Username
-<br><br>
 A link will be sent to the email associated to your account where 
 you can create a new password.
+<br><br>
 
 <% flash.each do |key, msg| %>
     <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
+    <%= tag("br") %>
     <%= content_tag :script, :type => "text/javascript" do -%>
         setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
     <% end %>
 <% end %>
 
-<h2>Enter Email</h2>
-<%= form_for(:user, :url => "resetbyemail" ) do |f| %>
+<%= form_for(:user, :url => "resetpassword" ) do |f| %>
   <%= f.error_messages %>
   <div class="field">
-    <%= f.label :email %><br />
+    <b><%= f.label :username %></b>
+    <br>
+    <%= f.text_field :login %>
+  </div>
+  <h4>---- or ----</h4>
+  <br>
+  <div class="field">
+    <b><%= f.label :email %></b>
+    <br>
     <%= f.text_field :email %>
   </div>
   <div class="actions">
+    <br>
     <%= f.submit "Reset" %>
   </div>
 <% end %>

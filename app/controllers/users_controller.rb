@@ -41,28 +41,46 @@ class UsersController < ApplicationController
     render :action => "users/forgot"
   end
 
-  def test
+  def reset
+    # First ensure the username and perishable token 
+    @login = params[:login]
+    @perish_token = params[:token]
+    @user = User.find_by_login(@login)
 
+    if @user.perishable_token == @perish_token
+      flash[:notice] = "We're gonna reset you here" 
+    else
+      flash[:notice] = "We're sorry, but we could not locate your account. " +  
+        "If you are having issues try copying and pasting the URL " +  
+        "from your email into your browser or restarting the " +  
+        "reset password process."  
+    end
+    
+    render :action => "users/reset"
+    
   end
 
-  def resetbyemail
+  def resetpassword
+    @email,@login,@user = nil
+    @used_login = false
     @email = params[:user][:email]
-    @user = User.find_by_email(@email)
+    @login = params[:user][:login]
+    if(!(@user = User.find_by_email(@email)))
+      @user = User.find_by_login(@login)
+      @used_login = true
+    end
+
     if @user
       @user.send_password_reset_instructions
-      #Notifier.registration_confirmation(@user).deliver
       flash[:notice] = "Instructions to reset your password have been emailed to you, #{@user.login}. " + "Please check your email, #{@user.email}."
-      redirect_to :back  
-    else  
-      flash[:notice] = "No user with the email address \"#{@email}\" was found"  
-      redirect_to :back  
-    end
-  end
-
-  def resetbyusername
-    @user = User.find_by_login(params[:login])
-    if @user
-
+      redirect_to :back
+    else
+      if @used_login
+        flash[:notice] = "Sorry the Username supplied could not be found."
+      else
+        flash[:notice] = "Sorry the email supplied could not be found."
+      end
+      redirect_to :back
     end
   end
 
@@ -102,6 +120,5 @@ class UsersController < ApplicationController
       @userlevel = UserLevel::FRIEND
     end
   end
-
 
 end

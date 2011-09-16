@@ -8,8 +8,8 @@ AuthlogicProject::Application.routes.draw do
   match 'create' => "user_sessions#create"
 
   match 'forgot' => "users#forgot", :as => :forgot
-  match 'resetbyemail' => "users#resetbyemail"
-  match 'resetbylogin' => "users#resertbylogin"
+  match 'resetpassword' => "users#resetpassword"
+  match 'reset/:login/:token' => "users#reset"
 
   root :to => 'home#index'
 
