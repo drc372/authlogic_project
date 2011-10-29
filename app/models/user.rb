@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
   end  
 
   def send_user_registration_congrats(host)
-    #
     Notifier.registration_confirmation(self).deliver
   end  
 

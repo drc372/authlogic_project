@@ -11,4 +11,26 @@
 
 <%= @matchPath %><br>
 <%= @perish_token %><br>
-<%= @user.perishable_token %>
+<%= @user.perishable_token %><br>
+<%= @user %><br>
+<%= @test %><br>
+<%= @curURL %>
+
+<br><br>
+
+<%= form_tag("/resetcall", :method => "post") do %>
+  <div class = "field">
+    <%= label_tag :password %><br />
+    <%= text_field_tag :password %><br />
+  </div>
+  <div class = "field"><%= label_tag :password_confirmation %><br />
+    <%= password_field_tag :password_confirmation %><br />
+  </div>
+  <div class = "field">
+    <%= hidden_field_tag(:username, @login) %>  <div class = "field">
+  </div>
+  <div class = "field">
+    <%= hidden_field_tag(:token, @perish_token) %>  <div class = "field">
+  </div>
+  <%= submit_tag "Reset Password" %>
+<% end %>

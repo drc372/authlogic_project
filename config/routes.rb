@@ -10,6 +10,7 @@ AuthlogicProject::Application.routes.draw do
   match 'forgot' => "users#forgot", :as => :forgot
   match 'resetpassword' => "users#resetpassword"
   match 'reset/:login/:token' => "users#reset"
+  match 'resetcall' => "users#resetcall"
 
   root :to => 'home#index'
 

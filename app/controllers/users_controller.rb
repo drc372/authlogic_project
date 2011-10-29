@@ -41,14 +41,46 @@ class UsersController < ApplicationController
     render :action => "users/forgot"
   end
 
+  def resetcall
+    @username = params[:username] 
+    @user = User.find_by_login(@username)
+    @perishable_token = params[:token]
+    @user_token = @user.perishable_token
+    @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
+    @test = params[:user]
+    @curURL = request.fullpath
+    @success = false
+ 
+    if @user.perishable_token == @perishable_token
+      if @user.update_attributes(params[:user])
+        flash[:notice] = "Successfully updated profile."
+        @success = true
+      else
+        flash[:notice] = "Failed updating profile."
+      end
+    else
+      flash[:notice] = "Invalid token sent #{@user_token} : #{@perishable_token}"
+    end
+    
+    if @success
+      redirect_to "#{params[:username]}"
+      #redirect_to :action => "users/#{params[:username]}/"
+    else
+      render "users/reset"
+      #redirect_to "/reset/#{params[:username]}/#{params[:token]}"
+    end
+  end
+
   def reset
-    # First ensure the username and perishable token 
+    # First ensure the username and perishable token are valid
     @login = params[:login]
     @perish_token = params[:token]
     @user = User.find_by_login(@login)
 
     if @user.perishable_token == @perish_token
-      flash[:notice] = "We're gonna reset you here" 
+      flash[:notice] = "We're gonna reset you here"
+      #DanC: Put password edit here
     else
       flash[:notice] = "We're sorry, but we could not locate your account. " +  
         "If you are having issues try copying and pasting the URL " +  
@@ -56,8 +88,7 @@ class UsersController < ApplicationController
         "reset password process."  
     end
     
-    render :action => "users/reset"
-    
+    render "users/reset"    
   end
 
   def resetpassword
@@ -73,7 +104,7 @@ class UsersController < ApplicationController
     if @user
       @user.send_password_reset_instructions
       flash[:notice] = "Instructions to reset your password have been emailed to you, #{@user.login}. " + "Please check your email, #{@user.email}."
-      redirect_to :back
+      render :action => "home/emailconfirmation"
     else
       if @used_login
         flash[:notice] = "Sorry the Username supplied could not be found."
