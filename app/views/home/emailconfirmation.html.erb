@@ -1,0 +1,16 @@
+<head>
+  <meta http-equiv="refresh" content="5; URL=<%= root_path %>">
+</head>
+
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
+    <%= tag("br") %>
+    <%= content_tag :script, :type => "text/javascript" do -%>
+        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
+<% end %>
+
+
+<div id="user_nav">
+  If you are not redirected in 5 seconds click <%=link_to "Home", root_path %>.
+</div>
