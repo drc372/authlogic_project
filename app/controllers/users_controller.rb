@@ -42,33 +42,25 @@ class UsersController < ApplicationController
   end
 
   def resetcall
-    @username = params[:username] 
+    @username = params[:username]
     @user = User.find_by_login(@username)
     @perishable_token = params[:token]
-    @user_token = @user.perishable_token
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
-    @test = params[:user]
-    @curURL = request.fullpath
     @success = false
- 
+
     if @user.perishable_token == @perishable_token
       if @user.update_attributes(params[:user])
-        flash[:notice] = "Successfully updated profile."
         @success = true
-      else
-        flash[:notice] = "Failed updating profile."
       end
-    else
-      flash[:notice] = "Invalid token sent #{@user_token} : #{@perishable_token}"
     end
     
     if @success
-      redirect_to "#{params[:username]}"
-      #redirect_to :action => "users/#{params[:username]}/"
+      redirect_to "/users/#{params[:username]}",
+      :flash => { :notice => "Successfully updated profile." }
     else
-      render "users/reset"
-      #redirect_to "/reset/#{params[:username]}/#{params[:token]}"
+      redirect_to "/reset/#{params[:username]}/#{params[:token]}", 
+      :flash => { :notice => @user.errors }
     end
   end
 
@@ -79,16 +71,14 @@ class UsersController < ApplicationController
     @user = User.find_by_login(@login)
 
     if @user.perishable_token == @perish_token
-      flash[:notice] = "We're gonna reset you here"
-      #DanC: Put password edit here
+      render "users/reset" 
     else
       flash[:notice] = "We're sorry, but we could not locate your account. " +  
         "If you are having issues try copying and pasting the URL " +  
         "from your email into your browser or restarting the " +  
-        "reset password process."  
-    end
-    
-    render "users/reset"    
+        "reset password process."
+      render "/users/resetFailure"
+    end   
   end
 
   def resetpassword

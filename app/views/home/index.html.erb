@@ -27,25 +27,10 @@ that we want to display.
   <p> <%= "You have logged in #{current_user.login_count} times"%> </p>
 
 <% else %>
-  <h2>Log in</h2>
-  <%= form_for(@user_session, :url => "create" ) do |f| %>
-    <%#= render "shared/error_messages", :target => @user %>
-    <%= f.error_messages %>
-    <div class="field">
-      <%= f.label :login %><br />
-      <%= f.text_field :login %>
-    </div>
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password %>
-    </div>
-    <div class="actions">
-      <%= f.submit "Log in" %>
-    </div>
-    <div>
-      <%=link_to "Forget your password?", forgot_path %>
-    </div>
-  <% end %>
+  <%= render 'user_sessions/formLogin' %>
+  <div>
+    <%=link_to "Forget your password?", forgot_path %>
+  </div>
 <% end %>
 
 <%= debug(params) if Rails.env.development? %>
