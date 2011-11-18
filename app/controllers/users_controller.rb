@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_filter :determineUserLevel
+  before_filter :require_no_user, :only => [:new,:resetpassword,:reset,:forgot]
+  before_filter :require_user, :only => [:update]
 
 ### User Accounts ###
   def index
@@ -42,20 +44,21 @@ class UsersController < ApplicationController
   end
 
   def resetcall
-    @username = params[:username]
-    @user = User.find_by_login(@username)
-    @perishable_token = params[:token]
+    username = params[:username]
+    @user = User.find_by_login(username)
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
-    @success = false
+    @perish_token = params[:token]    
 
-    if @user.perishable_token == @perishable_token
+    success = false
+
+    if @user.perishable_token == @perish_token
       if @user.update_attributes(params[:user])
-        @success = true
+        success = true
       end
     end
     
-    if @success
+    if success
       redirect_to "/users/#{params[:username]}",
       :flash => { :notice => "Successfully updated profile." }
     else
@@ -70,7 +73,7 @@ class UsersController < ApplicationController
     @perish_token = params[:token]
     @user = User.find_by_login(@login)
 
-    if @user.perishable_token == @perish_token
+    if (@user and @user.perishable_token == @perish_token) then
       render "users/reset" 
     else
       flash[:notice] = "We're sorry, but we could not locate your account. " +  
@@ -82,13 +85,17 @@ class UsersController < ApplicationController
   end
 
   def resetpassword
-    @email,@login,@user = nil
-    @used_login = false
-    @email = params[:user][:email]
+    @login,@user = nil
+
+    email = nil
+    used_login = false
+
+    email = params[:user][:email]
     @login = params[:user][:login]
-    if(!(@user = User.find_by_email(@email)))
+
+    if(!(@user = User.find_by_email(email)))
       @user = User.find_by_login(@login)
-      @used_login = true
+      used_login = true
     end
 
     if @user
@@ -96,7 +103,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Instructions to reset your password have been emailed to you, #{@user.login}. " + "Please check your email, #{@user.email}."
       render :action => "home/emailconfirmation"
     else
-      if @used_login
+      if used_login
         flash[:notice] = "Sorry the Username supplied could not be found."
       else
         flash[:notice] = "Sorry the email supplied could not be found."

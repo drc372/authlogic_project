@@ -32,9 +32,9 @@ class ApplicationController < ActionController::Base
     def require_user
       logger.debug "ApplicationController::require_user"
       unless current_user
-        #store_location
-        #redirect_to new_user_session_url
-        redirect_to root_path
+        redirect_to new_user_session_url
+        #Go to the user login page
+        #redirect_to root_path
         return false
       end
     end
@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     def require_no_user
       logger.debug "ApplicationController:require_no_user"
       if current_user
-        #store_location
+        #If you are logged in, return to root
         redirect_to root_path
         return false
       end

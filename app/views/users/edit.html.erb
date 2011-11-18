@@ -18,5 +18,6 @@
 
 <%= debug(params) if Rails.env.development? %>
 <% else %>
-die
+<br><br>
+You are not logged in.  You cannot access the edit page.
 <% end %>
