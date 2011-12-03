@@ -28,14 +28,23 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if @user.update_attributes(params[:user])
-      flash[:notice] = "Successfully updated profile."
-      redirect_to root_url
-    else
-      render :action => 'edit'
+     
+    # Authlogic does not detect null passwords on update, this will check for it
+    if ( (params[:commit] == 'Change Email') or (not params[:user][:password].blank?) )
+      if @user.update_attributes(params[:user])
+        flash[:notice] = "Successfully updated #{@changed}."
+        redirect_to root_url
+      elsif
+        redirect_to "/users/#{@user.login}/edit", 
+        :flash => { :notice => @user.errors }
+      end
+    elsif
+      @user.errors[:base] = "Password field blank"
+      redirect_to "/users/#{@user.login}/edit", 
+        :flash => { :notice => @user.errors }
     end
-
   end
+
 
   
 ### Reset Password ###
