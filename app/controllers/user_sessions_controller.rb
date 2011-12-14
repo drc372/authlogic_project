@@ -7,16 +7,18 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Login successful hey thats a good thing right?"
-      redirect_back_or_default :root
+      redirect_to root_url
     else
-      render :action => "home/index"
+      redirect_to "/login/error"
     end
+    
   end
 
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful, come back and you get more virgins than a dead muslim"
-    redirect_back_or_default :root
+    #redirect_back_or_default :root
+    redirect_to root_url
   end
 
 end

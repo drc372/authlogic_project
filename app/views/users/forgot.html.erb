@@ -2,6 +2,12 @@ A link will be sent to the email associated to your account where
 you can create a new password.
 <br><br>
 
+<div id= "user_nav">
+  <%= link_to "Home",  root_path %>
+  <%= link_to "Login", root_path %>
+</div>
+<br><br>
+
 <% flash.each do |key, msg| %>
     <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
     <%= tag("br") %>

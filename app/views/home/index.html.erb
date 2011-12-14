@@ -4,6 +4,15 @@
 that we want to display.
 <br><br>
 
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
+    <%= tag("br") %>
+    <%= content_tag :script, :type => "text/javascript" do -%>
+        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
+<% end %>
+
+
 <div id="user_nav">
   <% if current_user %>
     <%= link_to "Edit Profile", edit_user_path(current_user.login) %>

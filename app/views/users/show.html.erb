@@ -7,13 +7,19 @@
 <p><%= "What controller has as user ...#{@userlevel}"%>
 <p><%= "Viewing the page of" %> <big><big> <%= "#{@tempUser}" %> </big></big>
 
+<br><br>
+<%= link_to "Home", root_path %>
+<% if @userlevel == 2 %>
+    <%= link_to "Logout", logout_path %>
+<% end %>
+
+<br><br>
+
 <p>
 <% if @userlevel == 1 %>
     This is shown when the admin is logged in.  Don't know what to about this yet.
 <% elsif @userlevel == 2 %>
     The user that owns this page is logged in.  They see and have access to everything.
-   <%= render 'formForEditEmail' %>
-   <%= render 'formForEditPassword' %>
 <% elsif @userlevel == 3 %>
     A user that is friends with this user is logged in.  They can see the friend privacy level.
 <% elsif @userlevel == 4 %>

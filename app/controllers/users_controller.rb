@@ -45,7 +45,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   
 ### Reset Password ###
   def forgot
@@ -55,24 +54,28 @@ class UsersController < ApplicationController
   def resetcall
     username = params[:username]
     @user = User.find_by_login(username)
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password_confirmation]
-    @perish_token = params[:token]    
+    if @user
+      @user.password = params[:password]
+      @user.password_confirmation = params[:password_confirmation]
+      @perish_token = params[:token]    
 
-    success = false
+      success = false
 
-    if @user.perishable_token == @perish_token
-      if @user.update_attributes(params[:user])
-        success = true
+      if @user.perishable_token == @perish_token
+        if @user.update_attributes(params[:user])
+          success = true
+        end
       end
-    end
     
-    if success
-      redirect_to "/users/#{params[:username]}",
-      :flash => { :notice => "Successfully updated profile." }
+      if success
+        redirect_to "/users/#{params[:username]}",
+        :flash => { :notice => "Successfully updated profile." }
+      else
+        redirect_to "/reset/#{params[:username]}/#{params[:token]}", 
+        :flash => { :notice => @user.errors }
+      end
     else
-      redirect_to "/reset/#{params[:username]}/#{params[:token]}", 
-      :flash => { :notice => @user.errors }
+      redirect_to root_path
     end
   end
 
@@ -94,17 +97,12 @@ class UsersController < ApplicationController
   end
 
   def resetpassword
-    @login,@user = nil
-
-    email = nil
-    used_login = false
-
-    email = params[:user][:email]
+    @login,@user,@email = nil
+    @email = params[:user][:email]
     @login = params[:user][:login]
 
-    if(!(@user = User.find_by_email(email)))
+    if(!(@user = User.find_by_email(@email)))
       @user = User.find_by_login(@login)
-      used_login = true
     end
 
     if @user
@@ -112,11 +110,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Instructions to reset your password have been emailed to you, #{@user.login}. " + "Please check your email, #{@user.email}."
       render :action => "home/emailconfirmation"
     else
-      if used_login
-        flash[:notice] = "Sorry the Username supplied could not be found."
-      else
-        flash[:notice] = "Sorry the email supplied could not be found."
-      end
+      flash[:notice] = "Sorry the user could not be found."
       redirect_to :back
     end
   end

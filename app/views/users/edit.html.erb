@@ -4,6 +4,16 @@
 <p><%= "matchPath  :#{@matchPath}"%>
 <p><%= "What controller has as user ...#{@userlevel}"%>
 
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
+    <%= tag("br") %>
+    <%= content_tag :script, :type => "text/javascript" do -%>
+        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
+<% end %>
+
+
+
 <% if @userlevel == 2 %>
 <h1>Edit your information </h1>
 <div id = "user_nav">
@@ -15,6 +25,7 @@
 <br />
 <%= render 'formForEditEmail' %>
 <%= render 'formForEditPassword' %>
+
 
 <%= debug(params) if Rails.env.development? %>
 <% else %>

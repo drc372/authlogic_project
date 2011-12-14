@@ -28,7 +28,6 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
-    annotate-models (1.0.4)
     arel (2.0.10)
     authlogic (3.0.3)
       activerecord (>= 3.0.7)
@@ -110,7 +109,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  annotate-models (= 1.0.4)
   authlogic
   factory_girl_rails
   haml
