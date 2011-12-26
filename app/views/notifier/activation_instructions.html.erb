@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+      Dear <%= @user.login %>,<br><br>
+      A request to create an account on this email address has been made.
+      If you did not make this request, simply ignore this email.  
+      If you did make this request just click the link below to activate:  
+    </p>
+    <p>
+      <%= @url %>
+    </p>
+    <p>
+      If the above URL does not work try copying and pasting it into your browser.  
+      If you continue to have problem please feel free to contact us.
+      Thanks and have a great day!
+    </p>
+  </body>
+</html>

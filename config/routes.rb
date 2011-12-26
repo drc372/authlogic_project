@@ -3,9 +3,13 @@ AuthlogicProject::Application.routes.draw do
 
   resources :users, :user_sessions
 
+  match 'activate/:login(/:activation_code)' => 'users#activate', :as => :activate_account
+  #match 'send_activation(/:user_id)' => 'users#send_activation', :as => :send_activation
+
   match 'login' => "user_sessions#new",  :as => :login
   match 'logout' => "user_sessions#destroy", :as => :logout
   match 'create' => "user_sessions#create"
+  match 'login/error' => "user_sessions#err"
 
   match 'forgot' => "users#forgot", :as => :forgot
   match 'resetpassword' => "users#resetpassword"

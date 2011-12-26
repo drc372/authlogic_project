@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new,:resetpassword,:reset,:forgot]
   before_filter :require_user, :only => [:update]
 
-### User Accounts ###
+### User Account ###
   def index
   end
 
@@ -14,13 +14,37 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    if @user.save
-      flash[:notice] = "Registration successful."
+
+    # Saving without session maintenance to skip
+    # auto-login which can't happen here because
+    # the User has not yet been activated
+    if @user.save_without_session_maintenance
+      @user.send_activation_instructions! 
+      flash[:notice] = "Registration successful. Please " +
+           "check your email for activation instructions"
       redirect_to root_url
     else
       render :action => 'new'
     end
   end
+
+  def activate
+    begin
+      @user = User.find_using_perishable_token(params[:activation_code], 1.week) || 
+        (raise Exception)
+      raise Exception if @user.active?
+      
+      if @user.activate!
+        UserSession.create(@user, false)
+        redirect_to root_url
+      else
+        render :action => :new
+      end
+    rescue Exception => msg
+      redirect_to root_url
+    end
+  end
+
 
   def edit
     @user = current_user
@@ -105,7 +129,7 @@ class UsersController < ApplicationController
       @user = User.find_by_login(@login)
     end
 
-    if @user
+    if @user and @user.active?
       @user.send_password_reset_instructions
       flash[:notice] = "Instructions to reset your password have been emailed to you, #{@user.login}. " + "Please check your email, #{@user.email}."
       render :action => "home/emailconfirmation"
